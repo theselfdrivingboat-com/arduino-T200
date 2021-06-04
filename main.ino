@@ -50,14 +50,9 @@ void setup() {
 } // speed will now jump to pot setting
 
 void loop() {
-//  val = analogRead(POT_PIN); // read the pot (value between 0 and 4095 for ESP32 12 bit A to D)
-//  val = map(val, 0, 4095, MIN_SPEED, MAX_SPEED); // scale pot reading to valid speed range
-//  Serial.println(val);
-//  myESC.speed(val); // sets the ESC speed
   curr_speed = forward_accelerate(10, curr_speed);
-  delay(10);
-  curr_speed = forward_deccelerate(10, curr_speed);
-  delay(1000); // Wait for a while
+  curr_speed = forward_decelerate(10, curr_speed);
+  curr_speed = forward_accelerate(10000, curr_speed);
 }
 
 int forward_accelerate(int seconds, int start_speed) {
@@ -70,7 +65,7 @@ int forward_accelerate(int seconds, int start_speed) {
     Left_ESC.speed(speed_of_motor); // motor starts up about half way through loop
     Right_ESC.speed(speed_of_motor);
     delay(10);
-    Serial.println(i);
+    Serial.println(speed_of_motor);
   }
   Serial.println("finished loop");
   return speed_of_motor;
@@ -86,7 +81,7 @@ int forward_deccelerate(int seconds, int start_speed) {
     Left_ESC.speed(speed_of_motor); // motor starts up about half way through loop
     Right_ESC.speed(speed_of_motor);
     delay(10);
-    Serial.println(i);
+    Serial.println(speed_of_motor);
   }
   Serial.println("finished loop");
   return speed_of_motor;
